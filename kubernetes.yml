@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: next-app
+  labels:
+    app: next-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: next-app
+  template:
+    metadata:
+      labels:
+        app: next-app
+    spec:
+      containers:
+        - name: next-app
+          image: ghcr.io/vessaldaneshvar/next-ci-cd:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: "0.5"
+              ephemeral-storage: 1G
+              memory: 1G
+            requests:
+              cpu: "0.5"
+              ephemeral-storage: 1G
+              memory: 1G
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: next-app
+spec:
+  selector:
+    app: next-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: next-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: nextapp-test.apps.ir-thr-ba1.arvancaas.ir
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: next-app
+                port:
+                  name: http
+
