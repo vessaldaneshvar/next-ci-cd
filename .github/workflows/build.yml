@@ -16,5 +16,3 @@ jobs:
           context: my-app
           file: my-app/Dockerfile
           push: true
-          tags: ghcr.io/vessaldaneshvar/next-ci-cd:latest
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image
