@@ -7,11 +7,13 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
       -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: my-app
           file: my-app/Dockerfile
           push: true
           tags: vesaldaneshvar/nextjs-ci-cd:latest
