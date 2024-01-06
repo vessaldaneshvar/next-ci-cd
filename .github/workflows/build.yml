@@ -11,7 +11,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: my-app/
+          context: .
           file: my-app/Dockerfile
           push: true
           tags: vesaldaneshvar/nextjs-ci-cd:latest
